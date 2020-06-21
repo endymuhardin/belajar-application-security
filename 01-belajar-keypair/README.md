@@ -28,18 +28,14 @@
 
         openssl req -key private.pem -new -x509 -days 365 -out public.crt
 
-8. Simpan private key dan certificate dalam file PKCS12
+8. Melihat isi digital certificate
+
+        openssl x509 -in public.crt -text -nooout
+
+9. Simpan private key dan certificate dalam file PKCS12
 
         openssl pkcs12 -inkey private.pem -in public.crt -export -out keypair.p12
 
-9. Konversi PKCS12 menjadi PEM
+10. Konversi PKCS12 menjadi PEM
 
         openssl pkcs12 -in keypair.p12 -nodes -out keypair.pem
-
-10. Enkripsi file kecil halo.txt dengan public key
-
-        openssl rsautl -encrypt -in halo.txt -pubin -inkey public.pem | openssl base64 > halo-enc.txt
-
-11. Dekripsi dengan private key
-
-        cat halo-enc.txt | openssl base64 -d | openssl rsautl -decrypt -inkey private.pem -out halo-dec.txt 
